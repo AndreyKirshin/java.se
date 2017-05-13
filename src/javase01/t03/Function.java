@@ -1,18 +1,31 @@
-package javase01.t02;
+package javase01.t03;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
-/**
- * Created by 1 on 23.04.2017.
- */
 public class Function {
 
-    ArrayList<Double> arguments = argumentsList(3.14, 6.38, 0.01);
+
+    Function() {
+        System.out.println("Введите а: ");
+        Scanner s = new Scanner(System.in);
+        double a = s.nextDouble();
+
+        System.out.println("Введите b: ");
+        double b = s.nextDouble();
+
+        System.out.println("Введите h: ");
+        double h = s.nextDouble();
+
+        ArrayList<Double> arguments = argumentsList(a, b, h);
+        showResult(arguments);
+    }
 
 
 
-    public void showResult(){
+    public void showResult(ArrayList<Double> arguments){
 
         for(int i = 0; i < arguments.size(); i++) {
             double [] argAndValue = new double[2];
@@ -34,8 +47,6 @@ public class Function {
             arguments.add(a);
             a = a + h;
         }
-
-
         return arguments;
     }
 }

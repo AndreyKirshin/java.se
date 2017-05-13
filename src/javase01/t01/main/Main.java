@@ -1,8 +1,7 @@
-package javase01.t01.logic;
+package javase01.t01.main;
 
-/**
- * Created by 1 on 23.04.2017.
- */
+import javase01.t01.logic.Logic;
+
 public class Main {
     public static void main(String[] args) {
         Logic logic = new Logic();
