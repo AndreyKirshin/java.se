@@ -14,8 +14,8 @@ public class StudentTest {
         target.addDiscipline(Disciplines.BIOLOGY);
         target.addDiscipline(Disciplines.PHYSICS);
 
-        target.setMark(Disciplines.BIOLOGY, 5.14);
-        target.setMark(Disciplines.PHYSICS, 6.3);
+        target.setMark(Disciplines.BIOLOGY, -5.14);
+        target.setMark(Disciplines.PHYSICS, -6.3);
     }
 
     @Test

@@ -31,7 +31,9 @@ public class Student {
             switch (dis){
                 case BIOLOGY:
                 case PHILOSOPHY:
-                    mark = mark.intValue();
+                    mark = Math.abs(mark.intValue());
+                    break;
+                default: mark = Math.abs(mark.floatValue());
             }
             disciplinesAndMarks.put(dis, mark);
         }
@@ -81,15 +83,6 @@ public class Student {
         public int compare(Student s1, Student s2) {
             return s1.getAverageScore() < s2.getAverageScore() ? 1 : s1.getAverageScore() == s2.getAverageScore() ? 0 : -1;
         }
-    }
-
-    public static void main(String[] args) {
-        Student s = new Student(3);
-        s.addDiscipline(Disciplines.BIOLOGY);
-        s.setMark(Disciplines.BIOLOGY, 5.14);
-        s.addDiscipline(Disciplines.PHYSICS);
-        s.setMark(Disciplines.PHYSICS, 6.3);
-        System.out.println(s);
     }
 }
 
