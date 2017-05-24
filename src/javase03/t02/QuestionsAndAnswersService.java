@@ -11,17 +11,10 @@ public class QuestionsAndAnswersService {
 
         Scanner scanner = new Scanner(System.in);
         int selection = scanner.nextInt();
-        Locale lang = selection == 1 ? Locale.forLanguageTag("ru") : Locale.forLanguageTag("en");
+        Locale lang = selectLanguage(selection);
 
         ResourceBundle rb = ResourceBundle.getBundle("QABundle", lang);
-        System.out.println("1 " + rb.getString("q1"));
-        System.out.println();
-        System.out.println("2 " + rb.getString("q2"));
-        System.out.println();
-        System.out.println("3 " + rb.getString("q3"));
-        System.out.println();
-        System.out.println("4 " + rb.getString("q4"));
-        System.out.println();
+        printQuestions(rb);
 
         for (int i = 0; i < 1; ) {
             System.out.println("Please, select question's number");
@@ -29,12 +22,32 @@ public class QuestionsAndAnswersService {
             scanner = new Scanner(System.in);
             selection = scanner.nextInt();
 
-            System.out.println("Answer: " + rb.getString("a" + selection));
+            System.out.println("Answer: " + getAnswer(rb, selection));
             System.out.println();
             System.out.println("Again? (1 - yes / 2 - no)");
             scanner = new Scanner(System.in);
             selection = scanner.nextInt();
             if(selection != 1) i++;
+        }
+    }
+
+    private Locale selectLanguage(int selection) {
+        return selection == 1 ? Locale.forLanguageTag("ru") : Locale.forLanguageTag("en");
+    }
+
+    private String getAnswer(ResourceBundle rb, int selection) {
+        if (selection > rb.keySet().size()) {
+            System.out.println("Select correct number!!!");
+            Scanner s = new Scanner(System.in);
+            selection = s.nextInt();
+            getAnswer(rb, selection);
+        }
+        return rb.getString("a" + selection);
+    }
+
+    private void printQuestions(ResourceBundle rb){
+        for (int i = 1; i <= rb.keySet().size()/2; i++) {
+            System.out.println(i +" " + rb.getString("q" + i));
         }
     }
 
