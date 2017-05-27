@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class QuestionsAndAnswersService {
 
     public void runUsersInterface() {
-        System.out.println("Hallo! Select language (ru - 1 / en - 2)");
+        System.out.println("Hello! Select language (ru - 1 / en - 2)");
 
         Scanner scanner = new Scanner(System.in);
         int selection = scanner.nextInt();
@@ -36,7 +36,7 @@ public class QuestionsAndAnswersService {
     }
 
     private String getAnswer(ResourceBundle rb, int selection) {
-        if (selection > rb.keySet().size()) {
+        if (selection > rb.keySet().size()/2) {
             System.out.println("Select correct number!!!");
             Scanner s = new Scanner(System.in);
             selection = s.nextInt();
