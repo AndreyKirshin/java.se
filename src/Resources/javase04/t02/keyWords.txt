@@ -7,7 +7,7 @@ case
 catch
 char
 class
-const
+const*
 continue
 default
 double

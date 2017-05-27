@@ -34,6 +34,7 @@ public class KeyWordsJava {
 
         try(FileOutputStream fileOutputStream = new FileOutputStream("countKeyWords.txt")) {
             fileOutputStream.write(map.toString().getBytes("UTF-8"));
+            fileOutputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
