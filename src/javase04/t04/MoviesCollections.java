@@ -13,8 +13,7 @@ import java.util.*;
 public class MoviesCollections {
 
     public static void main(String[] args) {
-        new MoviesCollections().runUsersInterface();
-
+        System.out.println(new MoviesCollections().runUsersInterface());
     }
 
     public List<Movie> runUsersInterface() {
@@ -92,7 +91,6 @@ public class MoviesCollections {
         System.out.println("Select number the movie to remove: ");
         Scanner s = new Scanner(System.in);
         movies.remove(s.nextInt());
-
     }
 
     private void addMovieToCollection(List<Movie> movies, List<String> actors) {
@@ -156,7 +154,6 @@ class Movie implements Serializable {
     @Override
     public String toString() {
         return "Movie: '" + name + '\'' +
-                ", Actors: " + actors +
-                '\n';
+                ", Actors: " + actors;
     }
 }
