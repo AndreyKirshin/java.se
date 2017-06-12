@@ -31,8 +31,10 @@ public class PropertiesReaderMap {
             BufferedReader buf = new BufferedReader(fr);
             String line;
             while ((line = buf.readLine()) != null){
-                String[] pair = line.split("=");
-                map.put(pair[0], pair[1]);
+                if(line.contains("=")){
+                    String[] pair = line.split("=");
+                    map.put(pair[0], pair[1]);
+                }
             }
             return map;
         } catch (FileNotFoundException e) {
