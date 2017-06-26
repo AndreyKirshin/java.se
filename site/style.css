@@ -1,0 +1,23 @@
+body {
+background-color: #708090;
+color: #87CEFA;
+font-family : sans-serif;
+}
+
+#header {
+	background-color: #999;
+	text-align: center;
+	color: #87CEFA;
+	border: 1px solid #000;
+	margin-top: 18px;
+	font-family : sans-serif ;
+}
+#box_text {
+	color: #87CEFA;
+	font-family : sans-serif ;
+}
+#footer {
+	background-color: #999;
+	text-align: center;
+	color: #424;
+}

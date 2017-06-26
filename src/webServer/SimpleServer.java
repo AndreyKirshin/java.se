@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +39,9 @@ public class SimpleServer {
         @Override
         public void run() {
             try {
-                List<String> headersLines = readHeaders();
-                String path = getRequestURL(headersLines);
-                System.out.println(path);
-                //writeResponse("<html><body><h1>Hello from Epam!</h1></body></html>");
-                //String s = giveHTMLPage();
-                //String s = dispatch(path);
-                writeResponse(path);
+                List<String> headerLines = readHeaders();
+                String path = getRequestURL(headerLines);
+                dispatch(path);
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -55,37 +50,38 @@ public class SimpleServer {
             System.err.println("Client processing finished");
         }
 
-        private void writeResponse(String path) throws IOException {
+        private void dispatch(String path) throws IOException {
             String contentType = "text/html";
-            String s = "";
+            String fileName;
             switch (path) {
                 case "/": {
-                    s = "index.html";
+                    fileName = "index.html";
                     break;
                 }
                 case "/index.html": {
-                    s = "index.html";
+                    fileName = "index.html";
                     break;
                 }
                 case "/style.css": {
-                    s = "style.css";
+                    fileName = "style.css";
                     contentType = "text/css";
                     break;
                 }
                 case "/img/cat.jpg": {
-                    s = "img/cat.jpg";
+                    fileName = "img/cat.jpg";
+                    contentType = "image/pjpeg";
                     break;
                 }
                 case "/guess.html": {
-                    s = "guess.html";
+                    fileName = "guess.html";
                     break;
                 }
                 case "/cats.html": {
-                    s = "cats.html";
+                    fileName = "cats.html";
                     break;
                 }
                 default: {
-                    s = "404.html";
+                    fileName = "404.html";
                     break;
                 }
             }
@@ -93,21 +89,13 @@ public class SimpleServer {
             String response = "HTTP 1.1 200 OK\r\n" +
                     "Server: my own server 18.06.2017\r\n" +
                     "Content-Type: " + contentType + "\r\n" +
-                    // "Content-Length: " + s.length() + "\r\n" +
                     "Connection: close\r\n\r\n";
 
-
-            String res = response + new String(Files.readAllBytes(Paths.get(".\\site\\" + s)));
+            String res = response + new String(Files.readAllBytes(Paths.get(".\\site\\" + fileName)));
 
             byte[] b = res.getBytes();
             os.write(b);
             os.flush();
-
-        }
-
-        private String giveHTMLPage() throws IOException {
-            return new String(Files.readAllBytes(Paths.get(".\\site\\index.html")));
-
         }
 
         private List<String> readHeaders() throws IOException {
@@ -126,50 +114,7 @@ public class SimpleServer {
             return headersLines;
         }
 
-        private String dispatch(String path) {
-            String s = "";
-            switch (path) {
-                case "/": {
-                    s = "index.html";
-                    break;
-                }
-                case "/index.html": {
-                    s = "index.html";
-                    break;
-                }
-                case "/style.css": {
-                    s = "style.css";
-                    break;
-                }
-                case "/img/cat.jpg": {
-                    s = "img/cat.jpg";
-                    break;
-                }
-                case "/guess.html": {
-                    s = "guess.html";
-                    break;
-                }
-                case "/cats.html": {
-                    s = "cats.html";
-                    break;
-                }
-                default: {
-                    s = "404.html";
-                    break;
-                }
-            }
-
-            try {
-                return new String(Files.readAllBytes(Paths.get(".\\site\\" + s)));
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-
-        }
-
         private String getRequestURL(List<String> request) {
-
             return request.stream().filter(line -> line != null && line.matches(URL_REGEXP)).map(url -> {
                 Pattern p = Pattern.compile(URL_REGEXP);
                 Matcher m = p.matcher(url);
