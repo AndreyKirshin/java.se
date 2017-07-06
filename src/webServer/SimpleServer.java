@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 public class SimpleServer {
 
     private static final String URL_REGEXP = "GET\\s(/.*)\\sHTTP.*";
+    private static final String SITE_DIR = ".\\site\\";
 
     public static void main(String[] args) throws IOException {
         final int port = 8080;
@@ -53,37 +54,19 @@ public class SimpleServer {
         private void dispatch(String path) throws IOException {
             String contentType = "text/html";
             String fileName;
-            switch (path) {
-                case "/": {
-                    fileName = "index.html";
-                    break;
+
+            if(path.equals("/")){
+                fileName = SITE_DIR + "index.html";
+            } else{
+                fileName = SITE_DIR + path.substring(1);
+                File f = new File(fileName);
+                if(!f.exists()){
+                    fileName = SITE_DIR + "404.html";
                 }
-                case "/index.html": {
-                    fileName = "index.html";
-                    break;
-                }
-                case "/style.css": {
-                    fileName = "style.css";
-                    contentType = "text/css";
-                    break;
-                }
-                case "/img/cat.jpg": {
-                    fileName = "img/cat.jpg";
-                    contentType = "image/pjpeg";
-                    break;
-                }
-                case "/guess.html": {
-                    fileName = "guess.html";
-                    break;
-                }
-                case "/cats.html": {
-                    fileName = "cats.html";
-                    break;
-                }
-                default: {
-                    fileName = "404.html";
-                    break;
-                }
+            }
+
+            if(fileName.endsWith("css")){
+                contentType = "text/css";
             }
 
             String response = "HTTP 1.1 200 OK\r\n" +
@@ -91,7 +74,7 @@ public class SimpleServer {
                     "Content-Type: " + contentType + "\r\n" +
                     "Connection: close\r\n\r\n";
 
-            String res = response + new String(Files.readAllBytes(Paths.get(".\\site\\" + fileName)));
+            String res = response + new String(Files.readAllBytes(Paths.get(fileName)));
 
             byte[] b = res.getBytes();
             os.write(b);
